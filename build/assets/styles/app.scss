@@ -1,0 +1,150 @@
+@import "./scopes";
+@import "variables";
+@import "extendibles";
+@import "class";
+@import "fonts";
+
+* {
+  font-family: ralo;
+  margin: 0;
+  padding: 0;
+}
+.ralo {
+  font-family: ralo !important;
+}
+html {
+  margin: 0;
+  padding: 0;
+}
+body {
+  // background: rgba(91, 200, 250, 0.02);
+  background: white !important;
+  color: rgba(41, 38, 38, 0.938);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.text_inherit {
+  color: inherit !important;
+}
+.ri{
+  border-right: 1px solid #08A85D;
+}
+.sort_app {
+  display: flex;
+  .blacko {
+    height: 100% !important;
+    width: 170px;
+    // background: #143240
+    
+    
+  }
+  .sort_nav {
+    .falo {
+      max-height: 700px !important;
+      // overflow-y: scroll !important;
+    }
+    transition-duration: 0.2s;
+    color: white;
+    background: #0f2f3edf;
+    .side {
+      // position: fixed;
+      width: 100%;
+      z-index: 1;
+      height: 100%;
+    }
+  }
+  .sort_page {
+    padding-left: 2%;
+    padding-right: 2%;
+    max-width: 950px;
+    width: 96%;
+  }
+  .indez {
+    position: absolute;
+    z-index: -3;
+  }
+}
+@media (max-width: 1000px) {
+  .ri{
+  border-right: 0px solid #08A85D;
+  border-left: 0px solid #08A85D;
+}
+  .sort_page {
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+    max-width: 950px;
+    width: 96%;
+  }
+  .sort_app {
+    display: block;
+    .blacko {
+    border-right: none;
+
+      width: fit-content;
+      // background: #446162;
+    }
+    .sort_nav {
+      width: 100%;
+      max-height: fit-content !important;
+    }
+    .false {
+      max-height: 110px !important;
+      overflow: hidden;
+      .nav_button {
+        visibility: hidden;
+      }
+      .nav_button:nth-of-type(1) {
+        visibility: visible;
+      }
+      .nav_button:nth-of-type(2) {
+        visibility: visible;
+      }
+      .nav_button:nth-of-type(3) {
+        visibility: visible;
+      }
+      .nav_button:nth-of-type(4) {
+        visibility: visible;
+      }
+    }
+    .member_status{
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      .tone{
+        font-size: 11px !important;
+      }
+      .down_ed{
+        font-size: 13px !important;
+      }
+      .smaller{
+        font-size: 12px;
+      }
+    }
+    .true {
+      max-height: 260px !important;
+      overflow: hidden;
+      .nav_button {
+        visibility: visible;
+      }
+    }
+    .show-more {
+      display: flex !important;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      color: white;
+      .rali {
+        font-size: 12px;
+      }
+      .fa {
+        margin-top: 2px;
+      }
+      background: #315869;
+    }
+  }
+  .rounded_point {
+    height: 4px;
+  }
+}
+
+

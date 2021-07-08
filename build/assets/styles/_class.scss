@@ -1,0 +1,139 @@
+.break_1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.z-balmer {
+  box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1);
+}
+.break_2 {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+.break_3 {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+}
+.hide {
+  visibility: hidden !important;
+}
+.word-break {
+  word-break: break-all;
+}
+
+.h-fit {
+  height: fit-content;
+}
+.pointer {
+  cursor: pointer;
+}
+.w-fit {
+  width: fit-content !important;
+}
+.text-init {
+  color: inherit !important;
+}
+.pnt {
+  cursor: pointer;
+}
+.z-balm {
+  box-shadow: 1px 1px 19px rgba(0, 0, 0, 0.1) !important;
+}
+.ovin {
+  overflow: hidden;
+}
+.heart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.my-col-2 {
+  font-family: metro !important;
+  width: 12%;
+  min-width: 144px;
+}
+.sm-hide {
+  display: block;
+}
+.sm-show {
+  display: none !important;
+}
+.flex {
+  display: flex;
+}
+.fit {
+  width: fit-content;
+}
+.flex-2 {
+  flex: 2;
+}
+.font-light {
+  font-family: rali;
+}
+.sm-show-flex {
+  display: none;
+}
+.hide_over {
+  overflow: hidden;
+}
+.bou {
+  border-color: #1c5169 !important;
+}
+@media (max-width: 1000px) {
+  .sm-hidden {
+    display: none;
+  }
+  .sm-show-flex {
+    display: flex !important;
+  }
+  .sm-flex {
+    display: flex;
+  }
+  .sm-hide {
+    display: none !important;
+  }
+  .sm-show {
+    display: block !important;
+  }
+}
+
+@keyframes opacy {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.opacy {
+  animation-name: opacy;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+}
+
+.form-control:focus {
+  color: #495057 !important;
+  background-color: #fff !important;
+  border-color: #ffd5ae !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem #ffd5ae !important;
+}

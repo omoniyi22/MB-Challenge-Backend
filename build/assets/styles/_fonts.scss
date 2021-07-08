@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "metro";
+  src: url("../fonts/Metropolis.otf");
+}
+@font-face {
+  font-family: "rali";
+  src: url("../fonts/Raleway-Light.ttf");
+}
+@font-face {
+  font-family: "ralo";
+  src: url("../fonts/Raleway-SemiBold.ttf");
+}
+@font-face {
+  font-family: "sand_small";
+  src: url("./../fonts/Quicksand-Medium.ttf");
+}
+
+@font-face {
+  font-family: "sand_reg";
+  src: url("./../fonts/Quicksand-Regular.ttf");
+}
+
+.sand_small {
+  font-family: sand_small;
+}
+
+.sand_reg {
+  font-family: sand_reg;
+}
+
+.metro {
+  font-family: "metro";
+}
+.rali {
+  font-family: "rali";
+}
+.ralo {
+  font-family: "ralo";
+}
