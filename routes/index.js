@@ -1,7 +1,7 @@
-const ProfileRoutes = require('./profile')
+const ProjectRoutes = require('./project')
 
 const Routes = async router => {
-  await ProfileRoutes(router)
+  await ProjectRoutes(router)
 }
 
 module.exports = Routes
