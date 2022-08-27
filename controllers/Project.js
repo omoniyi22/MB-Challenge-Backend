@@ -179,39 +179,6 @@ const ProjectController = {
 
     }
   }
-
-  //   async DeleteProjectRound(req, res) {
-  //     try {
-  //       let project = await Project.findByIdAndDelete(projectId);
-
-  //       const { error } = deleteRoundFile.validate(roundFileId);
-  //       if (error) res.status(400).json({ msg: error.details[0].message });
-
-
-  //       if (project) {
-  //         let updatedProjectRounds = [...project.rounds].filter((round) => round._id !== roundFileId)
-  //         project.rounds = updatedProjectRounds;
-
-  //         let savedProject = await project.save();
-
-  //         res.status(200).send({
-  //           msg: "Round successfully deleted",
-  //           data: savedProject
-  //         });
-
-  //       } else {
-  //         res.status(404).send({
-  //           msg: "Project Not Found",
-  //         });
-  //       }
-
-  //     } catch (error) {
-  //       res.status(500).send({
-  //         msg: "An error occured",
-  //         err: error,
-  //       });
-  //     }
-  //   }
 };
 
 
