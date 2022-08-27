@@ -1,4 +1,4 @@
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary').v2
 const {
 	CLOUDNARY_CLOUD_NAME,
 	CLOUDNARY_API_KEY,
@@ -22,8 +22,10 @@ module.exports.FileValidation = (records, projectSequence) => {
 	else return null
 }
 
-module.exports.Cloudinary = cloudinary.v2.config({
+cloudinary.config({
 	cloud_name: CLOUDNARY_CLOUD_NAME,
 	api_key: CLOUDNARY_API_KEY,
 	api_secret: CLOUDNARY_API_SECRET
 })
+
+module.exports.Cloudinary = cloudinary

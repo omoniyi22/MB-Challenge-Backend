@@ -1,8 +1,8 @@
 const Project = require("./../models/project");
-const { createProject, editProject, addRoundFile, deleteRoundFile } = require("./../validator/project");
+const { createProject, editProject } = require("./../validator/project");
 const { createReadStream } = require('fs');
 const parse = require('csv-parse').parse;
-const { FileValidation } = require("./../utils/index")
+const { FileValidation, Cloudinary } = require("./../utils/index")
 const rimraf = require('rimraf');
 
 const ProjectController = {
@@ -152,10 +152,8 @@ const ProjectController = {
 
                 if (ErrorInFle) res.status(500).json({ msg: ErrorInFle, })
 
-
-                
-
                 else {
+                  const feadback = await Cloudinary.uploader(req.file.path)
                   res.status(200).send({
                     msg: "File Uploaded Successfully",
                     data: records,
