@@ -5,6 +5,8 @@ const ProjectRoutes = async (router) => {
   // Main Project Routes
   await router.route("/projects").get(ProjectController.GetAllProjects);
 
+  await router.route("/projects/:id").get(ProjectController.GetOneProjects);
+
   await router.route("/projects").post(ProjectController.CreateProject);
 
   await router.route("/projects/:id").patch(ProjectController.UpdateProject);
@@ -14,9 +16,9 @@ const ProjectRoutes = async (router) => {
 
 
   // Round Files Routes
-  await router.route("/projects/:projectId/:roundFile").post(ProjectController.AddProjectRound);
+  await router.route("/projects/:projectId/rounds").post(ProjectController.AddProjectRound);
 
-  await router.route("/projects/:projectId/:roundFile").delete(ProjectController.DeleteProject);
+  await router.route("/projects/:projectId/:roundId").delete(ProjectController.DeleteProject);
 
 };
 

@@ -1,5 +1,9 @@
 const Project = require("./../models/project");
-const { createProject, editProject, projectRoundFile } = require("./../validator/project");
+const { createProject, editProject, addRoundFile, deleteRoundFile } = require("./../validator/project");
+const { createReadStream } = require('fs');
+const parse = require('csv-parse').parse;
+const { FileValidation } = require("./../utils/index")
+const rimraf = require('rimraf');
 
 const ProjectController = {
   async GetAllProjects(req, res) {
@@ -10,8 +14,25 @@ const ProjectController = {
         data: allProjects,
       });
     } catch (error) {
-      res.status(400).json({
-        msg: error,
+      res.status(500).json({
+        msg: "An error occured",
+        error
+      });
+    }
+  },
+
+  async GetOneProjects(req, res) {
+    try {
+      const project = await Project.findById(req.params.id);
+      console.log({ project })
+      await res.status(200).json({
+        msg: "Fetched successfully",
+        data: project,
+      });
+    } catch (error) {
+      res.status(500).json({
+        msg: "An error occured",
+        error
       });
     }
   },
@@ -22,6 +43,7 @@ const ProjectController = {
       if (error) res.status(400).json({ msg: error.details[0].message });
 
       else {
+        let newProject = new Project(req.body);
         let savedProject = await newProject.save();
 
         res.status(201).json({
@@ -31,7 +53,7 @@ const ProjectController = {
       }
     } catch (error) {
       console.log({ error });
-      res.status(401).send({
+      res.status(500).send({
         msg: "An error occured",
         err: error,
       });
@@ -46,106 +68,150 @@ const ProjectController = {
       try {
 
         let project = await Project.findById(req.params.id);
-        let { title, uniprot, pdbId, objectivity } = await req.body;
 
-        project.title = await title !== null ? title : project.title;
-        project.uniprot = await uniprot !== null ? uniprot : project.uniprot;
-        project.pdbId = await pdbId !== null ? pdbId : project.pdbId;
-        project.objectivity = await objectivity !== null ? objectivity : project.objectivity;
+        if (!project) {
+          res.status(404).json({ msg: "Project not found" });
 
-        let savedProject = await project.save();
-        res.status(200).json({
-          msg: "Project updated successfully",
-          data: savedProject
-        });
+        } else {
+          let { title, uniprot, pdbId, objectivity } = await req.body;
 
+          project.title = await title !== null ? title : project.title;
+          project.uniprot = await uniprot !== null ? uniprot : project.uniprot;
+          project.pdbId = await pdbId !== null ? pdbId : project.pdbId;
+          project.objectivity = await objectivity !== null ? objectivity : project.objectivity;
+
+          await project.save();
+
+          const fetchAllProjectsUptoDate = await Project.find();
+
+          res.status(200).json({
+            msg: "Project updated successfully",
+            data: fetchAllProjectsUptoDate
+          });
+
+        }
       } catch (error) {
         console.log(error);
-        res.status(400).send({
+        res.status(500).send({
           msg: "An error occured",
-          err: error,
+          err: error
         });
       }
   },
 
   async DeleteProject(req, res) {
     try {
-      Project.findByIdAndDelete(req.params.id)
-      res.status(200).send({
-        msg: "Project successfully deleted",
-      });
+      let projectExist = await Project.findById(req.params.id)
+      if (!projectExist) {
+        res.status(404).send({
+          msg: "Project not found",
+        });
+      } else {
+        await Project.findByIdAndDelete(req.params.id)
+
+        const fetchAllProjectsUptoDate = await Project.find();
+
+        res.status(200).send({
+          msg: "Project successfully deleted",
+          data: fetchAllProjectsUptoDate
+        });
+      }
     } catch (error) {
-      res.status(400).send({
+      res.status(500).send({
         msg: "An error occured",
         err: error,
       });
     }
   },
+
+
 
   async AddProjectRound(req, res) {
     try {
-      let { projectId, roundFile } = await req.params;
-
-      let project = await Project.findById(projectId);
-
-      const { error } = projectRoundFile.validate(req.body.roundFile);
-      if (error) res.status(400).json({ msg: error.details[0].message });
-
-      if (project.round) {
-        project.round = [...project.round, roundFile];
+      if (req.files === null) {
+        res.status(400).json({ msg: "No file uploaded" })
+      }
+      let project = await Project.findById(req.params.projectId)
+      if (!project) {
+        res.status(404).json({ msg: "Project not found" })
       } else {
-        project.round = [roundFile];
+        let projectSequence = project.sequence
+
+        let sampleFile = req.files.file;
+
+        let uploadPath = __dirname + "/../sample/" + sampleFile.name;
+        if (sampleFile.mimetype !== "text/csv") res.status(404).json({ msg: "File Type is not supported" })
+        else sampleFile.mv(uploadPath, async function (err) {
+          if (err) res.status(500).json(err);
+          else {
+            var parser = parse({ columns: false }, function (err, records) {
+              if (err) res.status(500).json(err);
+              else {
+                // Vet the CSV File              
+                let ErrorInFle = FileValidation(records, projectSequence)
+
+                if (ErrorInFle) res.status(500).json({ msg: ErrorInFle, })
+
+
+                
+
+                else {
+                  res.status(200).send({
+                    msg: "File Uploaded Successfully",
+                    data: records,
+                  });
+                }
+              }
+            });
+            createReadStream(uploadPath).pipe(parser)
+          }
+          rimraf('./sample/*');
+        })
       }
 
-      let savedProject = await project.save();
-
-      res.status(200).send({
-        msg: "Round successfully added",
-        data: savedProject
-      });
-
     } catch (error) {
-      res.status(400).send({
+      console.log({ error })
+      res.status(500).send({
         msg: "An error occured",
         err: error,
       });
-    }
-  },
+    } finally {
 
-  async DeleteProjectRound(req, res) {
-    try {
-
-      let { projectId, roundFile } = await req.params;
-
-      let project = await Project.findById(projectId);
-
-      const { error } = projectRoundFile.validate(roundFile);
-      if (error) res.status(400).json({ msg: error.details[0].message });
-
-
-      if (project.round) {
-        let updatedProjectRounds = project.round.filter((round) => round !== roundFile)
-        project.round = await updatedProjectRounds;
-
-        let savedProject = await project.save();
-
-        res.status(200).send({
-          msg: "Round successfully deleted",
-          data: savedProject
-        });
-
-      } else {
-        res.status(404).send({
-          msg: "Not Found",
-        });
-      }
-    } catch (error) {
-      res.status(400).send({
-        msg: "An error occured",
-        err: error,
-      });
     }
   }
+
+  //   async DeleteProjectRound(req, res) {
+  //     try {
+  //       let project = await Project.findByIdAndDelete(projectId);
+
+  //       const { error } = deleteRoundFile.validate(roundFileId);
+  //       if (error) res.status(400).json({ msg: error.details[0].message });
+
+
+  //       if (project) {
+  //         let updatedProjectRounds = [...project.rounds].filter((round) => round._id !== roundFileId)
+  //         project.rounds = updatedProjectRounds;
+
+  //         let savedProject = await project.save();
+
+  //         res.status(200).send({
+  //           msg: "Round successfully deleted",
+  //           data: savedProject
+  //         });
+
+  //       } else {
+  //         res.status(404).send({
+  //           msg: "Project Not Found",
+  //         });
+  //       }
+
+  //     } catch (error) {
+  //       res.status(500).send({
+  //         msg: "An error occured",
+  //         err: error,
+  //       });
+  //     }
+  //   }
 };
 
 

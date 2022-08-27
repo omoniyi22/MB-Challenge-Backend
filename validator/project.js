@@ -15,5 +15,10 @@ module.exports.editProject = joi.object().keys({
   uniprot: joi.object(),
 })
 
+module.exports.addRoundFile = joi.object().keys({
 
-module.exports.projectRoundFile = joi.string().required()
+  fileLink: joi.string().required(),
+})
+
+
+module.exports.deleteRoundFile = joi.string().required()

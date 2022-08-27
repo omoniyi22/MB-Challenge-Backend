@@ -18,7 +18,9 @@ const ProjectSchema = new Schema({
     goal: String,
   }],
 
-  rounds: [String]
+  rounds: [{
+    fileLink: String
+  }]
 },
 
   {

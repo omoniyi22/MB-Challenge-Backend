@@ -8,6 +8,9 @@ const Routes = require("./routes/index");
 const cors = require("cors");
 const PORT = process.env.PORT || 8001;
 
+const fileUpload = require('express-fileupload')
+router.use(fileUpload())
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
