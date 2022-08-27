@@ -144,7 +144,7 @@ const ProjectController = {
         else sampleFile.mv(uploadPath, async function (err) {
           if (err) res.status(500).json(err);
           else {
-            var parser = parse({ columns: false }, function (err, records) {
+            var parser = parse({ columns: false }, async function (err, records) {
               if (err) res.status(500).json(err);
               else {
                 // Vet the CSV File              
@@ -167,7 +167,7 @@ const ProjectController = {
         })
       }
 
-    } catch (error) {
+    } catch (error) { 
       console.log({ error })
       res.status(500).send({
         msg: "An error occured",
