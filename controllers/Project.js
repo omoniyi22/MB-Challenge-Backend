@@ -139,7 +139,7 @@ const ProjectController = {
 
         let sampleFile = req.files.file;
 
-        let uploadPath = __dirname + "/../sample/" + sampleFile.name;
+        let uploadPath = __dirname + "/../utils/" + sampleFile.name;
 
         // uploadPath = path.resolve(uploadPath)
 
