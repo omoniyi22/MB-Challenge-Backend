@@ -23,8 +23,7 @@ const ProjectController = {
 
   async GetOneProjects(req, res) {
     try {
-      const project = await Project.findById(req.params.id);
-      console.log({ project })
+      const project = await Project.findById(req.params.id); 
       await res.status(200).json({
         msg: "Fetched successfully",
         data: project,
@@ -51,8 +50,7 @@ const ProjectController = {
           data: savedProject,
         });
       }
-    } catch (error) {
-      console.log({ error });
+    } catch (error) { 
       res.status(500).send({
         msg: "An error occured",
         err: error,
@@ -90,8 +88,7 @@ const ProjectController = {
           });
 
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error) {   
         res.status(500).send({
           msg: "An error occured",
           err: error
@@ -131,6 +128,8 @@ const ProjectController = {
       if (req.files === null) {
         res.status(400).json({ msg: "No file uploaded" })
       }
+
+
       let project = await Project.findById(req.params.projectId)
       if (!project) {
         res.status(404).json({ msg: "Project not found" })
@@ -149,26 +148,51 @@ const ProjectController = {
               else {
                 // Vet the CSV File              
                 let ErrorInFle = FileValidation(records, projectSequence)
-
                 if (ErrorInFle) res.status(500).json({ msg: ErrorInFle, })
-
                 else {
-                  const feadback = await Cloudinary.uploader(req.file.path)
-                  res.status(200).send({
-                    msg: "File Uploaded Successfully",
-                    data: records,
-                  });
+                  try {
+                    const options = {
+                      // use_filename: false,
+                      // unique_filename: false,
+                      // overwrite: true,
+                      folder: "rounds",
+                      resource_type: "auto"
+                    };
+
+
+
+                    const feadback = await Cloudinary.uploader.upload(uploadPath, options)
+                    project.round = [{
+                      fileLink: feadback.secure_url,
+                      fileId: feadback.public_id
+                    }];
+
+                    const savedProject = await project.save();
+
+                    res.status(200).send({
+                      msg: "File Uploaded Successfully",
+                      data: savedProject,
+                    });
+
+                    rimraf('./sample/*', () => console.log("done"));
+
+               
+                  } catch (error) {               
+                    res.status(500).send({
+                      msg: "Error during upload",
+                      data: error,
+                    });
+
+                  }
                 }
               }
             });
             createReadStream(uploadPath).pipe(parser)
           }
-          rimraf('./sample/*');
         })
       }
 
     } catch (error) { 
-      console.log({ error })
       res.status(500).send({
         msg: "An error occured",
         err: error,

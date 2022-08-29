@@ -1,9 +1,18 @@
 const cloudinary = require('cloudinary').v2
+
 const {
 	CLOUDNARY_CLOUD_NAME,
 	CLOUDNARY_API_KEY,
 	CLOUDNARY_API_SECRET,
 } = require("./../config")
+
+cloudinary.config({
+	cloud_name: CLOUDNARY_CLOUD_NAME,
+	api_key: CLOUDNARY_API_KEY,
+	api_secret: CLOUDNARY_API_SECRET
+})
+
+module.exports.Cloudinary = cloudinary
 
 module.exports.FileValidation = (records, projectSequence) => {
 	let strigifyRecord = JSON.stringify(records)
@@ -22,10 +31,3 @@ module.exports.FileValidation = (records, projectSequence) => {
 	else return null
 }
 
-cloudinary.config({
-	cloud_name: CLOUDNARY_CLOUD_NAME,
-	api_key: CLOUDNARY_API_KEY,
-	api_secret: CLOUDNARY_API_SECRET
-})
-
-module.exports.Cloudinary = cloudinary

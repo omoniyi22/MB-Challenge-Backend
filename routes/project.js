@@ -1,5 +1,5 @@
 const ProjectController = require("./../controllers/Project");
-
+const Multer = require("./../middleware/multer")
 
 const ProjectRoutes = async (router) => {
   // Main Project Routes
@@ -16,7 +16,7 @@ const ProjectRoutes = async (router) => {
 
 
   // Round Files Routes
-  await router.route("/projects/:projectId/rounds").post(ProjectController.AddProjectRound);
+  await router.route("/projects/:projectId/round").post(ProjectController.AddProjectRound);
 
   await router.route("/projects/:projectId/:roundId").delete(ProjectController.DeleteProject);
 
