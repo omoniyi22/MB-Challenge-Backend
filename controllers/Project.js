@@ -4,6 +4,7 @@ const { createReadStream } = require('fs');
 const parse = require('csv-parse').parse;
 const { FileValidation, Cloudinary } = require("./../utils/index")
 const rimraf = require('rimraf');
+const path = require("path")
 
 const ProjectController = {
   async GetAllProjects(req, res) {
@@ -23,7 +24,7 @@ const ProjectController = {
 
   async GetOneProjects(req, res) {
     try {
-      const project = await Project.findById(req.params.id); 
+      const project = await Project.findById(req.params.id);
       await res.status(200).json({
         msg: "Fetched successfully",
         data: project,
@@ -50,7 +51,7 @@ const ProjectController = {
           data: savedProject,
         });
       }
-    } catch (error) { 
+    } catch (error) {
       res.status(500).send({
         msg: "An error occured",
         err: error,
@@ -88,7 +89,7 @@ const ProjectController = {
           });
 
         }
-      } catch (error) {   
+      } catch (error) {
         res.status(500).send({
           msg: "An error occured",
           err: error
@@ -138,16 +139,22 @@ const ProjectController = {
 
         let sampleFile = req.files.file;
 
-        let uploadPath = __dirname + "/sample/" + sampleFile.name;
+        let uploadPath = __dirname + "/../sample/" + sampleFile.name;
 
+        // uploadPath = path.resolve(uploadPath)
 
-        
         if (sampleFile.mimetype !== "text/csv") res.status(404).json({ msg: "File Type is not supported" })
         else sampleFile.mv(uploadPath, async function (err) {
-          if (err) res.status(500).json(err);
+          if (err) {
+            console.log({ err })
+            res.status(500).json(err)
+          }
           else {
             var parser = parse({ columns: false }, async function (err, records) {
-              if (err) res.status(500).json(err);
+              if (err) {
+                console.log({ err })
+                res.status(500).json(err)
+              }
               else {
                 // Vet the CSV File              
                 let ErrorInFle = FileValidation(records, projectSequence)
@@ -179,8 +186,8 @@ const ProjectController = {
 
                     rimraf('./sample/*', () => console.log("done"));
 
-               
-                  } catch (error) {               
+
+                  } catch (error) {
                     res.status(500).send({
                       msg: "Error during upload",
                       data: error,
@@ -195,7 +202,7 @@ const ProjectController = {
         })
       }
 
-    } catch (error) { 
+    } catch (error) {
       res.status(500).send({
         msg: "An error occured",
         err: error,
