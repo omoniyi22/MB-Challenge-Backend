@@ -18,7 +18,7 @@ const ProjectRoutes = async (router) => {
   // Round Files Routes
   await router.route("/projects/:projectId/round").post(ProjectController.AddProjectRound);
 
-  await router.route("/projects/:projectId/:roundId").delete(ProjectController.DeleteProject);
+  // await router.route("/projects/:projectId/:roundId").delete(ProjectController.DeleteProject);
 
 };
 

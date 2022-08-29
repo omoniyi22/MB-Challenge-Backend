@@ -138,7 +138,10 @@ const ProjectController = {
 
         let sampleFile = req.files.file;
 
-        let uploadPath = __dirname + "/../sample/" + sampleFile.name;
+        let uploadPath = __dirname + "/sample/" + sampleFile.name;
+
+
+        
         if (sampleFile.mimetype !== "text/csv") res.status(404).json({ msg: "File Type is not supported" })
         else sampleFile.mv(uploadPath, async function (err) {
           if (err) res.status(500).json(err);
