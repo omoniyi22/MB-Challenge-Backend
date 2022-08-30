@@ -2,9 +2,9 @@ const Project = require("./../models/project");
 const { createProject, editProject } = require("./../validator/project");
 const { createReadStream } = require('fs');
 const parse = require('csv-parse').parse;
-const { FileValidation, Cloudinary } = require("./../utils/index")
+const { FileValidation, Cloudinary, GenerateResult } = require("./../utils/index")
 const rimraf = require('rimraf');
-const path = require("path")
+
 
 const ProjectController = {
   async GetAllProjects(req, res) {
@@ -141,8 +141,6 @@ const ProjectController = {
 
         let uploadPath = __dirname + "/../utils/" + sampleFile.name;
 
-        // uploadPath = path.resolve(uploadPath)
-
         if (sampleFile.mimetype !== "text/csv") res.status(404).json({ msg: "File Type is not supported" })
         else sampleFile.mv(uploadPath, async function (err) {
           if (err) {
@@ -158,20 +156,18 @@ const ProjectController = {
               else {
                 // Vet the CSV File              
                 let ErrorInFle = FileValidation(records, projectSequence)
+                let Result = GenerateResult(records, projectSequence)
+                project.result = Result
                 if (ErrorInFle) res.status(500).json({ msg: ErrorInFle, })
                 else {
                   try {
                     const options = {
-                      // use_filename: false,
-                      // unique_filename: false,
-                      // overwrite: true,
                       folder: "rounds",
                       resource_type: "auto"
                     };
 
-
-
                     const feadback = await Cloudinary.uploader.upload(uploadPath, options)
+
                     project.round = [{
                       fileLink: feadback.secure_url,
                       fileId: feadback.public_id
@@ -184,8 +180,7 @@ const ProjectController = {
                       data: savedProject,
                     });
 
-                    rimraf('./sample/*', () => console.log("done"));
-
+                    rimraf(`./utils/${sampleFile.name}`, () => console.log("done"));
 
                   } catch (error) {
                     res.status(500).send({
@@ -207,8 +202,6 @@ const ProjectController = {
         msg: "An error occured",
         err: error,
       });
-    } finally {
-
     }
   }
 };

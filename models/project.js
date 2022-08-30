@@ -21,7 +21,16 @@ const ProjectSchema = new Schema({
   round: [{
     fileLink: String,
     fileId: String,
-  }]
+  }],
+
+  result: {
+    total_sequences: Number,
+    hits_value: Number,
+    hits_percent: Number,
+    best_sequence: Number,
+    fold_improvement_over_wild_type: Number,
+    muts_per_fitness: [],
+  }
 },
 
   {

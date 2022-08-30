@@ -31,3 +31,59 @@ module.exports.FileValidation = (records, projectSequence) => {
 	else return null
 }
 
+module.exports.GenerateResult = (records) => {
+	// Remove the header
+	records = records.filter((data, index) => index > 0)
+
+	// sort Records
+	records = records.sort((a, b) => b[1] - a[1])
+
+	// Total number of sequence
+	let total_sequences = records.length;
+
+	// Calculation of Total number of sequence greater than wild type fitness
+	let fitness_for_wild_type = records.filter((data, index) => data[2] === "WT")
+	fitness_for_wild_type = fitness_for_wild_type.map((a, b) => Number(a[1]))
+
+	let add_up_fitness_for_wild_type = fitness_for_wild_type.reduce((a, b) => (a + b))
+
+	let average_of_wild_type = add_up_fitness_for_wild_type / fitness_for_wild_type.length
+
+	//Sequence Greater than wild type fitness (Hits)
+	// Hits Value
+	let hits_value = records.filter((data, index) => data[1] > average_of_wild_type).length
+
+	// Hits Percent
+	let hits_percent = (hits_value / total_sequences) * 100
+
+
+	// Sequence with the highest fitness score (Fitness score)
+	let best_sequence = records[0][1]
+
+	// Values of Mutation Ranked based on Fitness (Mutations, Fitness, MutaionLength)
+	let unique_fitness = [...new Set(records.map((data, index) => data[1]))];
+	let muts_per_fitness = unique_fitness.map((data, index) => {
+		let muts = records.filter((a, b) => data === a[1])
+		let concat = muts.map(dat => ` ${dat[2]}`).join()
+		let length = muts.length
+		return [concat, Number(data), length]
+	})
+
+
+
+	// Fold improvement over wild type
+	let fold_improvement_over_wild_type = best_sequence / average_of_wild_type
+
+
+	let result = ({
+		total_sequences,
+		hits_value,
+		hits_percent: parseFloat(Number(hits_percent).toFixed(2)),
+		best_sequence: parseFloat(Number(best_sequence).toFixed(2)),
+		fold_improvement_over_wild_type: parseFloat(Number(fold_improvement_over_wild_type).toFixed(2)),
+		muts_per_fitness,
+	})
+
+	return result
+}
+
