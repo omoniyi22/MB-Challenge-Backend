@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.68199f48.css",
-    "main.js": "/static/js/main.05582b71.js",
+    "main.js": "/static/js/main.7aef6760.js",
     "static/media/knot.svg": "/static/media/knot.1ae9f553646c0c8db624.svg",
     "static/media/stack.svg": "/static/media/stack.3b7b5a0f383d8949f047.svg",
     "static/media/Beausite Classic Medium.ttf": "/static/media/Beausite Classic Medium.90c0181726ee399a0062.ttf",
@@ -26,10 +26,10 @@
     "static/media/arrow.svg": "/static/media/arrow.328a8e3553249983c0e6.svg",
     "static/media/plus.svg": "/static/media/plus.cbaa5a46d62928878dd8.svg",
     "main.68199f48.css.map": "/static/css/main.68199f48.css.map",
-    "main.05582b71.js.map": "/static/js/main.05582b71.js.map"
+    "main.7aef6760.js.map": "/static/js/main.7aef6760.js.map"
   },
   "entrypoints": [
     "static/css/main.68199f48.css",
-    "static/js/main.05582b71.js"
+    "static/js/main.7aef6760.js"
   ]
 }
