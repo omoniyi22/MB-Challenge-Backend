@@ -176,7 +176,7 @@ const ProjectController = {
                     const savedProject = await project.save();
 
                     res.status(200).send({
-                      msg: "File Uploaded Successfully",
+                      msg: "Result Uploaded Successfully",
                       data: savedProject,
                     });
 
