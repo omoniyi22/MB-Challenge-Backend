@@ -24,8 +24,9 @@ module.exports.FileValidation = (records, projectSequence) => {
 	let checkIfHeadersAreRight = (sequence && fitness && muts) ? "" : " CSV Header must be Sequence, Fitness and Muts only."
 	let eachRowContains3Column = records.every(data => data.length === 3) ? "" : " Each Rows must have only three columns."
 
-
-	let recordsHasProjectSequence = new RegExp(projectSequence, "i").test(strigifyRecord) ? "" : " Project Sequence must be included in CSV Sequence Column."
+	let recordsHasProjectSequence = ""
+	if (projectSequence)
+		recordsHasProjectSequence = records.some(data => projectSequence.toUpperCase() === data[0].toUpperCase()) ? "" : " Project Sequence must be included in CSV Sequence Column."
 
 	FinalErroMessage = checkIfHeadersAreRight + eachRowContains3Column + recordsHasProjectSequence
 
@@ -66,7 +67,7 @@ module.exports.GenerateResult = (records) => {
 	let unique_fitness = [...new Set(records.map((data, index) => data[1]))];
 	let muts_per_fitness = unique_fitness.map((data, index) => {
 		let muts = records.filter((a, b) => data === a[1])
-		let concat = muts.map(dat => ` ${dat[2]}`).join()
+		let concat = muts.map(dat => `${dat[2]} `).join()
 		let length = muts.length
 		return [concat, Number(data), length]
 	})
