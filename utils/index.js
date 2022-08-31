@@ -24,8 +24,6 @@ module.exports.FileValidation = (records, projectSequence) => {
 	let checkIfHeadersAreRight = (sequence && fitness && muts) ? "" : " CSV Header must be Sequence, Fitness and Muts only."
 	let eachRowContains3Column = records.every(data => data.length === 3) ? "" : " Each Rows must have only three columns."
 
-	console.log({projectSequence})
-	projectSequence= "343ei9434h09h9__=wed"
 
 	let recordsHasProjectSequence = new RegExp(projectSequence, "i").test(strigifyRecord) ? "" : " Project Sequence must be included in CSV Sequence Column."
 
