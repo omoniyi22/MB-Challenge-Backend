@@ -135,7 +135,7 @@ const ProjectController = {
       if (!project) {
         res.status(404).json({ msg: "Project not found" })
       } else {
-        let projectSequence = project.sequence
+        let projectSequence = await project.uniprot.structure
 
         let sampleFile = req.files.file;
 
