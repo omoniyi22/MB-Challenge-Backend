@@ -29,7 +29,9 @@ const ProjectSchema = new Schema({
     hits_percent: Number,
     best_sequence: Number,
     fold_improvement_over_wild_type: Number,
+    parent_sequence: Number,
     muts_per_fitness: [],
+    sequence_points: []
   }
 },
 

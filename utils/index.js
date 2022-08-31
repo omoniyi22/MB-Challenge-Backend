@@ -74,14 +74,17 @@ module.exports.GenerateResult = (records) => {
 	// Fold improvement over wild type
 	let fold_improvement_over_wild_type = best_sequence / average_of_wild_type
 
+	let sequence_points = records.map(data => Number(data[1]))
 
 	let result = ({
 		total_sequences,
 		hits_value,
+		parent_sequence: parseFloat(Number(average_of_wild_type).toFixed(2)),
 		hits_percent: parseFloat(Number(hits_percent).toFixed(2)),
 		best_sequence: parseFloat(Number(best_sequence).toFixed(2)),
 		fold_improvement_over_wild_type: parseFloat(Number(fold_improvement_over_wild_type).toFixed(2)),
 		muts_per_fitness,
+		sequence_points
 	})
 
 	return result
