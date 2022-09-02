@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.68199f48.css",
-    "main.js": "/static/js/main.e387a709.js",
+    "main.css": "/static/css/main.dc98b2b5.css",
+    "main.js": "/static/js/main.741ece55.js",
     "static/media/knot.svg": "/static/media/knot.1ae9f553646c0c8db624.svg",
     "static/media/stack.svg": "/static/media/stack.3b7b5a0f383d8949f047.svg",
     "static/media/Beausite Classic Medium.ttf": "/static/media/Beausite Classic Medium.90c0181726ee399a0062.ttf",
@@ -25,11 +25,11 @@
     "static/media/left_arrow.svg": "/static/media/left_arrow.28053266d06716593f61.svg",
     "static/media/arrow.svg": "/static/media/arrow.328a8e3553249983c0e6.svg",
     "static/media/plus.svg": "/static/media/plus.cbaa5a46d62928878dd8.svg",
-    "main.68199f48.css.map": "/static/css/main.68199f48.css.map",
-    "main.e387a709.js.map": "/static/js/main.e387a709.js.map"
+    "main.dc98b2b5.css.map": "/static/css/main.dc98b2b5.css.map",
+    "main.741ece55.js.map": "/static/js/main.741ece55.js.map"
   },
   "entrypoints": [
-    "static/css/main.68199f48.css",
-    "static/js/main.e387a709.js"
+    "static/css/main.dc98b2b5.css",
+    "static/js/main.741ece55.js"
   ]
 }
