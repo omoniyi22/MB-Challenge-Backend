@@ -29,10 +29,9 @@ app.use(express.static(path.join(__dirname, '/client/build')))
 
 Routes(router);
 
-app.get("/*", (req, res) => {
+app.get("/index", (req, res) => {
   res.sendFile(clientPath)
 })
-
 app.use("/v1/api", router);
 
 mongoose
