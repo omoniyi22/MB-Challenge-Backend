@@ -29,10 +29,11 @@ app.use(express.static(path.join(__dirname, '/client/build')))
 
 Routes(router);
 
-app.get("/index", (req, res) => {
+
+app.use("/v1/api", router);
+app.get("/*", (req, res) => {
   res.sendFile(clientPath)
 })
-app.use("/v1/api", router);
 
 mongoose
   .connect(DB, {
