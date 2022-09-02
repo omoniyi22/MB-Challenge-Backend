@@ -176,13 +176,14 @@ const ProjectController = {
                     const savedProject = await project.save();
 
                     res.status(200).send({
-                      msg: "File Uploaded Successfully",
+                      msg: "Result Uploaded Successfully",
                       data: savedProject,
                     });
 
                     rimraf(`./utils/${sampleFile.name}`, () => console.log("done"));
 
                   } catch (error) {
+                    console.lgo({ error })
                     res.status(500).send({
                       msg: "Error during upload",
                       data: error,
@@ -198,6 +199,7 @@ const ProjectController = {
       }
 
     } catch (error) {
+      console.log({error})
       res.status(500).send({
         msg: "An error occured",
         err: error,

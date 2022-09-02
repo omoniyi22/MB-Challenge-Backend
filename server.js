@@ -6,6 +6,7 @@ require("dotenv").config();
 let { DB } = require("./config");
 const Routes = require("./routes/index");
 const cors = require("cors");
+const path = require("path");
 const PORT = process.env.PORT || 8001;
 
 const fileUpload = require('express-fileupload')
@@ -21,9 +22,16 @@ app.use(express.urlencoded({
 }));
 
 
+const clientPath = path.join(__dirname, '/client/build/', "index.html")
+
+app.use(express.static(path.join(__dirname, '/client/build')))
 
 
 Routes(router);
+
+app.get("/*", (req, res) => {
+  res.sendFile(clientPath)
+})
 
 app.use("/v1/api", router);
 
